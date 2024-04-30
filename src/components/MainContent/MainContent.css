@@ -1,0 +1,17 @@
+.main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .main-content section {
+    margin-bottom: 20px;
+  }
+  
+  .main-content h2 {
+    color: #333;
+  }
+  
+  .main-content p {
+    color: #666;
+  }
+  

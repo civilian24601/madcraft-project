@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function App() {
+const App = () => {
+  const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerateContent = async () => {
+    setLoading(true);
+    try {
+      // Ensure this URL points to your server-side route for content generation
+      const response = await axios.get('http://localhost:3000/generate');
+      setContent(response.data.content); // Make sure to access the data correctly based on your server response
+    } catch (error) {
+      console.error('Error fetching content:', error);
+      setContent('Failed to fetch content.');
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>Welcome to AI Content Generator</h1>
       </header>
+      <main>
+        <button onClick={handleGenerateContent} disabled={loading}>
+          {loading ? 'Generating...' : 'Generate Content'}
+        </button>
+        <div className="content">
+          {content && <p>{content}</p>}
+        </div>
+      </main>
+      <footer>
+        <p>Powered by OpenAI</p>
+      </footer>
     </div>
   );
 }
